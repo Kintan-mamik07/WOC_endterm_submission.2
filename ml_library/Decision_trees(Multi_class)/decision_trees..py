@@ -2,9 +2,7 @@ import numpy as np
 from collections import Counter
 
 
-# --------------------------
-# Utility functions
-# --------------------------
+
 
 def entropy(y):
     y = np.asarray(y).astype(int)
@@ -22,9 +20,8 @@ def information_gain(y, y_left, y_right):
     return H_parent - (w_left * entropy(y_left) + w_right * entropy(y_right))
 
 
-# --------------------------
-# Decision Tree Classifier
-# --------------------------
+
+
 
 class DecisionTree:
     def __init__(self, max_depth=10, min_samples=2, max_features=None):
@@ -33,7 +30,7 @@ class DecisionTree:
         self.max_features = max_features
         self.tree_ = None
 
-    # ---- core helpers ----
+    
     def _best_split(self, X, y, feature_indices):
         best_ig = -1.0
         best_feature = None
@@ -63,13 +60,13 @@ class DecisionTree:
         return best_feature, best_thresh, best_ig
 
     def _build(self, X, y, depth):
-        # stopping rules
+        
         if len(set(y)) == 1 or depth >= self.max_depth or len(y) < self.min_samples:
             return Counter(y).most_common(1)[0][0]
 
         n_features_total = X.shape[1]
 
-        # choose subset of features (Random Forest style if max_features set)
+        
         n_features = (
             self.max_features
             if self.max_features is not None
@@ -118,3 +115,4 @@ class DecisionTree:
     def predict(self, X):
         X = np.array(X)
         return np.array([self._predict_one(row, self.tree_) for row in X])
+
