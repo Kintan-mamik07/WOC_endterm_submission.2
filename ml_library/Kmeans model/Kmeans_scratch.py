@@ -1,4 +1,4 @@
-# kmeans_scratch.py
+
 
 import numpy as np
 
@@ -27,23 +27,23 @@ class KMeansScratch:
         self.centroids_ = self._init_centroids(X)
 
         for _ in range(self.max_iters):
-            # Assign step
+            
             distances = np.array([
                 [euclidean_distance(x, c) for c in self.centroids_]
                 for x in X
             ])
             labels = np.argmin(distances, axis=1)
 
-            # Update step
+           
             new_centroids = np.array([
                 X[labels == k].mean(axis=0) for k in range(self.n_clusters)
             ])
-            # Handle empty clusters (rare but possible)
+            
             for k in range(self.n_clusters):
                 if np.isnan(new_centroids[k]).any():
                     new_centroids[k] = self.centroids_[k]
 
-            # Check convergence
+            
             shift = np.linalg.norm(new_centroids - self.centroids_)
             self.centroids_ = new_centroids
             self.labels_ = labels
@@ -61,5 +61,6 @@ class KMeansScratch:
             for x in X
         ])
         return np.argmin(distances, axis=1)
+
 
 
